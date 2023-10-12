@@ -8,6 +8,7 @@ import getMusicsByArtist from "../requests/getMusicsByArtist";
 import GuessMusic from "../components/GuessMusic";
 
 import { musicsTest } from "../data/musicsTest.js";
+import Music from "../models/Music";
 
 export default function GuessMusics() {
   const { slug } = useParams();
@@ -19,7 +20,7 @@ export default function GuessMusics() {
   const [startCountdown, setStartCountdown] = useState<boolean>(false);
   const [isCountdownDone, setIsCountdownDone] = useState<boolean>(false);
 
-  const [musics, setMusics] = useState<{}[]>([]);
+  const [musics, setMusics] = useState<Music[]>([]);
 
   function handleStart() {
     setIsCountdownDone(false);
@@ -40,7 +41,7 @@ export default function GuessMusics() {
   }
 
   useEffect(() => {
-    const findedArtist = ARTISTS.find(
+    const findedArtist: ArtistModel | undefined = ARTISTS.find(
       (artist: ArtistModel) => artist.slug === slug
     );
 

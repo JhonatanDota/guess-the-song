@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import Music from "../models/Music";
 
 type GuessMusicProps = {
-  musics: {}[];
+  musics: Music[];
   onChoice: () => void;
 };
 
@@ -9,50 +10,60 @@ export default function GuessMusic(props: GuessMusicProps) {
   const { musics, onChoice } = props;
   const MAX_RANDOM_MUSICS_LENGTH = 4;
 
-  const [correctMusic, setCorrectMusic] = useState<any>({});
-  const [randomMusics, setRandomMusics] = useState<any[]>([]);
+  const [correctMusic, setCorrectMusic] = useState<Music>();
+  const [randomMusics, setRandomMusics] = useState<Music[]>([]);
 
   useEffect(() => {
-    const newRandomMusics: {}[] = [];
+    const newRandomMusics: Music[] = [];
 
-    for (let i = 0; i < MAX_RANDOM_MUSICS_LENGTH; i++) {
-        let alreadyAddedMusic: boolean = true;
+    for (let i: number = 0; i < MAX_RANDOM_MUSICS_LENGTH; i++) {
+      let alreadyAddedMusic: boolean = true;
+      let randomMusic: Music = randomizeMusic();
 
-        while (alreadyAddedMusic) {
-            let randomMusic: any = randomizeMusic();
+      while (alreadyAddedMusic) {
+        randomMusic = randomizeMusic();
 
+        alreadyAddedMusic = checkMusicAlreadyAdded(
+          randomMusic,
+          newRandomMusics
+        );
+      }
 
-            alreadyAddedMusic = !!newRandomMusics.find((music: any) => music.trackId === randomMusic.trackId);
-        };
-
-        newRandomMusics.push({});
-    };
+      newRandomMusics.push(randomMusic);
+    }
 
     setCorrectMusic(newRandomMusics[randomIndex(newRandomMusics.length)]);
     setRandomMusics(newRandomMusics);
-
-    console.log(musics);
   }, [musics]);
 
-  function randomizeMusic(): {} {
+  function randomizeMusic(): Music {
     const musicsLength = musics.length;
     const index = randomIndex(musicsLength);
 
     return musics[index];
   }
 
-  function randomIndex(length: number){
+  function randomIndex(length: number) {
     return Math.floor(Math.random() * length);
+  }
+
+  function checkMusicAlreadyAdded(music: Music, musicList: Music[]): boolean {
+    const isAdded = !!musicList.find((musicFinded: Music) =>
+      musicFinded.trackName.includes(music.trackName)
+    );
+
+    return isAdded;
   }
 
   return (
     <div className="flex flex-col gap-3">
       {randomMusics.map((music: any) => (
         <div className="border-2" onClick={onChoice}>
-            <h1 className="text-white">{music.trackName} - {music.trackId} </h1>
+          <h1 className="text-white">
+            {music.trackName} - {music.trackId}{" "}
+          </h1>
         </div>
       ))}
-      <h1 className="text-3xl text-red-300">{correctMusic.trackName}</h1>
     </div>
   );
 }
