@@ -10,8 +10,10 @@ export default function GuessMusic(props: GuessMusicProps) {
   const { musics, onChoice } = props;
   const MAX_RANDOM_MUSICS_LENGTH = 4;
 
-  const [correctMusic, setCorrectMusic] = useState<Music>();
   const [randomMusics, setRandomMusics] = useState<Music[]>([]);
+
+  const [correctMusic, setCorrectMusic] = useState<Music>();
+  const [selectedMusic, setSelectedMusic] = useState<Music>();
 
   useEffect(() => {
     const newRandomMusics: Music[] = [];
@@ -55,10 +57,14 @@ export default function GuessMusic(props: GuessMusicProps) {
     return isAdded;
   }
 
+  function choiceMusic(music: Music): void {
+    setSelectedMusic(music);
+  }
+
   return (
     <div className="flex flex-col gap-3">
       {randomMusics.map((music: any) => (
-        <div className="border-2" onClick={onChoice}>
+        <div className="border-2" onClick={() => choiceMusic(music)}>
           <h1 className="text-white">
             {music.trackName} - {music.trackId}{" "}
           </h1>
