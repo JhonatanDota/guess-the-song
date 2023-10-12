@@ -4,20 +4,22 @@ import MusicPlayer from "./MusicPlayer";
 
 type GuessMusicProps = {
   musics: Music[];
+  currentPoints: number;
+  setPoints: (newPoints: number) => void;
   onRoundEnd: () => void;
 };
 
 export default function GuessMusic(props: GuessMusicProps) {
-  const { musics, onRoundEnd } = props;
+  const { musics, onRoundEnd, currentPoints, setPoints } = props;
   const MAX_RANDOM_MUSICS_LENGTH = 4;
-  const MAX_PLAY_MUSIC_SECONDS = 15;
+  const MAX_PLAY_MUSIC_SECONDS = 5;
 
   const [randomMusics, setRandomMusics] = useState<Music[]>([]);
 
   const [correctMusic, setCorrectMusic] = useState<Music>();
   const [currentTime, setCurrentTime] = useState<number>(0);
 
-  const [selectedMusic, setSelectedMusic] = useState<Music>();
+  const [selectedMusic, setSelectedMusic] = useState<Music | null>(null);
   const [canChoice, setCanChoice] = useState<boolean>(true);
 
   const timesUp = currentTime >= MAX_PLAY_MUSIC_SECONDS;
@@ -68,9 +70,16 @@ export default function GuessMusic(props: GuessMusicProps) {
     setSelectedMusic(music);
   }
 
+  function checkCorrectChoice(): boolean {
+    if (selectedMusic) return selectedMusic.trackId === correctMusic?.trackId;
+
+    return false;
+  }
+
   if (timesUp) {
     setTimeout(() => {
       onRoundEnd();
+      if (checkCorrectChoice()) setPoints(currentPoints + 100);
     }, 3000);
   }
 
@@ -97,6 +106,7 @@ export default function GuessMusic(props: GuessMusicProps) {
           {music.trackName} - {music.trackId}{" "}
         </button>
       ))}
+      <h1 className="text-blue-300">PONTOS {currentPoints}</h1>
     </div>
   );
 }

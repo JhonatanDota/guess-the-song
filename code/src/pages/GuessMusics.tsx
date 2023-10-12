@@ -16,6 +16,8 @@ export default function GuessMusics() {
 
   const COUNTDOWN_SECONDS = 3;
 
+  const [points, setPoints] = useState<number>(0);
+
   const [artist, setArtist] = useState<ArtistModel>();
   const [startCountdown, setStartCountdown] = useState<boolean>(false);
   const [isCountdownDone, setIsCountdownDone] = useState<boolean>(false);
@@ -53,7 +55,12 @@ export default function GuessMusics() {
   return (
     <>
       {isCountdownDone ? (
-        <GuessMusic musics={musics} onRoundEnd={handleStart} />
+        <GuessMusic
+          musics={musics}
+          onRoundEnd={handleStart}
+          currentPoints={points}
+          setPoints={setPoints}
+        />
       ) : (
         <div className="text-white">
           <button onClick={handleStart}>Comecar</button>
