@@ -1,4 +1,4 @@
-import { ArtistModel } from "../data/artists";
+import ArtistModel from "../models/ArtistModel";
 import { NavLink } from "react-router-dom";
 
 type ArtistsCardProps = {

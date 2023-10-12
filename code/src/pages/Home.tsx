@@ -1,5 +1,6 @@
 import ArtistsCard from "../components/ArtistCard";
-import { ArtistModel, ARTISTS } from "../data/artists";
+import ArtistModel from "../models/ArtistModel";
+import ARTISTS from "../data/artists";
 
 export default function Home() {
   return (

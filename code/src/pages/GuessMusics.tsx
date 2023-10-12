@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { ArtistModel, ARTISTS } from "../data/artists";
+import ArtistModel from "../models/ArtistModel";
+import ARTISTS from "../data/artists";
 import Countdown from "../components/Countdown";
 import getMusicsByArtist from "../requests/getMusicsByArtist";
 import GuessMusic from "../components/GuessMusic";
 
-
-import {musicsTest} from "../data/musicsTest.js";
+import { musicsTest } from "../data/musicsTest.js";
 
 export default function GuessMusics() {
   const { slug } = useParams();
   const navigate = useNavigate();
+
+  const COUNTDOWN_SECONDS = 3;
 
   const [artist, setArtist] = useState<ArtistModel>();
   const [startCountdown, setStartCountdown] = useState<boolean>(false);
@@ -20,6 +22,7 @@ export default function GuessMusics() {
   const [musics, setMusics] = useState<{}[]>([]);
 
   function handleStart() {
+    setIsCountdownDone(false);
     setStartCountdown(true);
     if (artist) fetchArtistMusics(artist.name);
   }
@@ -37,7 +40,9 @@ export default function GuessMusics() {
   }
 
   useEffect(() => {
-    const findedArtist = ARTISTS.find((artist) => artist.slug === slug);
+    const findedArtist = ARTISTS.find(
+      (artist: ArtistModel) => artist.slug === slug
+    );
 
     if (findedArtist === undefined) navigate("/");
 
@@ -47,16 +52,17 @@ export default function GuessMusics() {
   return (
     <>
       {isCountdownDone ? (
-        <GuessMusic musics={musics} />
+        <GuessMusic musics={musics} onChoice={handleStart} />
       ) : (
         <div className="text-white">
           <button onClick={handleStart}>Comecar</button>
 
           {startCountdown && (
-            <Countdown seconds={5} onCountdownDone={handleIsDoneCountdown} />
+            <Countdown
+              seconds={COUNTDOWN_SECONDS}
+              onCountdownDone={handleIsDoneCountdown}
+            />
           )}
-
-          {isCountdownDone && <h1 className="text-white">Acabouuuuu</h1>}
         </div>
       )}
     </>
