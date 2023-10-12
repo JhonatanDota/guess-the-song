@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Music from "../models/Music";
+import MusicPlayer from "./MusicPlayer";
 
 type GuessMusicProps = {
   musics: Music[];
@@ -63,6 +64,7 @@ export default function GuessMusic(props: GuessMusicProps) {
 
   return (
     <div className="flex flex-col gap-3">
+      {correctMusic && <MusicPlayer music={correctMusic} maxPlayTime={15}/>}
       {randomMusics.map((music: any) => (
         <div className="border-2" onClick={() => choiceMusic(music)}>
           <h1 className="text-white">
