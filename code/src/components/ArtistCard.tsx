@@ -10,9 +10,15 @@ export default function ArtistsCard(props: ArtistsCardProps) {
 
   return (
     <NavLink to={`/guess/${artist.slug}/`}>
-      <div className="h-full flex flex-col items-center w-52 border-2 cursor-pointer transition delay-100 hover:scale-105">
-        <img className="h-full" src={artist.image} alt="" />
-        <p className="text-white font-bold p-2">{artist.name}</p>
+      <div className="relative rounded-md cursor-pointer border-2 border-white/10 h-48 w-full">
+        <img
+          className="rounded-md h-full w-full object-cover"
+          src={artist.image}
+          alt=""
+        />
+        <div className="absolute p-2 bg-black/60 bottom-0 w-full text-center">
+          <p className="text-white text-xl font-bold">{artist.name}</p>
+        </div>
       </div>
     </NavLink>
   );

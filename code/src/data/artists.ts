@@ -19,6 +19,22 @@ const ARTISTS: ArtistModel[] = [
     searchableName: "linkin park",
     image: linkin_park_image,
   },
+
+  {
+    id: 3,
+    slug: "linkin-park",
+    name: "Linkin Park",
+    searchableName: "linkin park",
+    image: linkin_park_image,
+  },
+
+  {
+    id: 4,
+    slug: "linkin-park",
+    name: "Linkin Park",
+    searchableName: "linkin park",
+    image: linkin_park_image,
+  },
 ];
 
 export default ARTISTS;
