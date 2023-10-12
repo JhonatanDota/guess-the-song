@@ -5,12 +5,13 @@ import MusicProgressBar from "./MusicProgressBar";
 type MusicPlayerProps = {
   music: Music;
   maxPlayTime: number;
+  currentTime: number;
+  setCurrentTime: (newTime: number) => void;
 };
 
 export default function MusicPlayer(props: MusicPlayerProps) {
-  const { music, maxPlayTime } = props;
+  const { music, maxPlayTime, currentTime, setCurrentTime } = props;
   const [song] = useState(new Audio(music.previewUrl));
-  const [currentTime, setCurrentTime] = useState<number>(0);
 
   function start() {
     song.volume = 0.02;

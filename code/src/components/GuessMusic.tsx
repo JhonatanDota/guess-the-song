@@ -4,17 +4,23 @@ import MusicPlayer from "./MusicPlayer";
 
 type GuessMusicProps = {
   musics: Music[];
-  onChoice: () => void;
+  onRoundEnd: () => void;
 };
 
 export default function GuessMusic(props: GuessMusicProps) {
-  const { musics, onChoice } = props;
+  const { musics, onRoundEnd } = props;
   const MAX_RANDOM_MUSICS_LENGTH = 4;
+  const MAX_PLAY_MUSIC_SECONDS = 15;
 
   const [randomMusics, setRandomMusics] = useState<Music[]>([]);
 
   const [correctMusic, setCorrectMusic] = useState<Music>();
+  const [currentTime, setCurrentTime] = useState<number>(0);
+
   const [selectedMusic, setSelectedMusic] = useState<Music>();
+  const [canChoice, setCanChoice] = useState<boolean>(true);
+
+  const timesUp = currentTime >= MAX_PLAY_MUSIC_SECONDS;
 
   useEffect(() => {
     const newRandomMusics: Music[] = [];
@@ -62,15 +68,34 @@ export default function GuessMusic(props: GuessMusicProps) {
     setSelectedMusic(music);
   }
 
+  if (timesUp) {
+    setTimeout(() => {
+      onRoundEnd();
+    }, 3000);
+  }
+
   return (
     <div className="flex flex-col gap-3">
-      {correctMusic && <MusicPlayer music={correctMusic} maxPlayTime={15}/>}
-      {randomMusics.map((music: any) => (
-        <div className="border-2" onClick={() => choiceMusic(music)}>
-          <h1 className="text-white">
-            {music.trackName} - {music.trackId}{" "}
-          </h1>
-        </div>
+      {correctMusic && (
+        <MusicPlayer
+          music={correctMusic}
+          maxPlayTime={MAX_PLAY_MUSIC_SECONDS}
+          currentTime={currentTime}
+          setCurrentTime={setCurrentTime}
+        />
+      )}
+      {randomMusics.map((music: Music) => (
+        <button
+          disabled={timesUp}
+          className={`border-2 p-4 text-white ${
+            timesUp && correctMusic?.trackId === music.trackId
+              ? "bg-green-600"
+              : "disabled:bg-gray-400"
+          }`}
+          onClick={() => choiceMusic(music)}
+        >
+          {music.trackName} - {music.trackId}{" "}
+        </button>
       ))}
     </div>
   );

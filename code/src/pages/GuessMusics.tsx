@@ -53,7 +53,7 @@ export default function GuessMusics() {
   return (
     <>
       {isCountdownDone ? (
-        <GuessMusic musics={musics} onChoice={handleStart} />
+        <GuessMusic musics={musics} onRoundEnd={handleStart} />
       ) : (
         <div className="text-white">
           <button onClick={handleStart}>Comecar</button>
