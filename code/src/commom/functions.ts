@@ -11,8 +11,8 @@ export function randomizeMusic(musics: MusicModel[]): MusicModel {
   return musics[index];
 }
 
-function checkCorrectChoice(choicedMusic: MusicModel, correctMusic: MusicModel): boolean {
-  if (choicedMusic) return choicedMusic.trackId === correctMusic.trackId;
+export function checkCorrectChoice(choicedMusic: MusicModel | null, correctMusic: MusicModel | undefined): boolean {
+  if (choicedMusic) return choicedMusic.trackId === correctMusic?.trackId;
 
   return false;
 }

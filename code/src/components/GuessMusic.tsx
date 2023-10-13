@@ -7,7 +7,7 @@ import {
   POSSIBLE_POINTS_BY_ROUND,
 } from "../commom/constants";
 
-import { randomIndex, randomizeMusic } from "../commom/functions";
+import { randomIndex, randomizeMusic, checkCorrectChoice } from "../commom/functions";
 
 type GuessMusicProps = {
   musics: MusicModel[];
@@ -32,7 +32,14 @@ export default function GuessMusic(props: GuessMusicProps) {
 
     setCorrectMusic(newRandomMusics[randomIndex(newRandomMusics.length)]);
     setRandomMusics(newRandomMusics);
-  }, [musics]);
+  }, []);
+
+  if (endRound) {
+    setTimeout(() => {
+      onRoundEnd();
+      if (checkCorrectChoice(choicedMusic, correctMusic)) addPoints(POSSIBLE_POINTS_BY_ROUND);
+    }, 3000);
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -43,16 +50,21 @@ export default function GuessMusic(props: GuessMusicProps) {
           endRound={() => setEndRound(true)}
         />
       )}
+
       {randomMusics.map((music: MusicModel, index: number) => (
         <button
           key={index}
           disabled={endRound}
-          className={`border-2 p-4 text-white ${choicedMusic?.trackId == music.trackId ? "bg-green-600" : ""}`}
-          onClick={() => endRound ? null : setChoicedMusic(music)}
+          className={`border-2 p-4 text-white ${
+            choicedMusic?.trackId == music.trackId ? "bg-green-600" : ""
+          }`}
+          onClick={() => (endRound ? null : setChoicedMusic(music))}
         >
           {music.trackName} - {music.trackId}{" "}
         </button>
       ))}
+
+      {endRound && <h1 className="text-white">{correctMusic?.trackName}</h1>}
     </div>
   );
 }

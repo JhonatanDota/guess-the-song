@@ -42,9 +42,9 @@ export default function GuessMusics() {
   }
 
   function handleStartRound() {
+    if (artist) fetchArtistMusics(artist.name);
     setIsCountdownDone(false);
     setStartCountdown(true);
-    if (artist) fetchArtistMusics(artist.name);
   }
 
   function addPoints(newPoints: number): void{
