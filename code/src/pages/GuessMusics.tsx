@@ -9,7 +9,7 @@ import GuessMusic from "../components/GuessMusic";
 import { COUNTDOWN_SECONDS } from "../commom/constants";
 
 import { musicsTest } from "../data/musicsTest.js";
-import Music from "../models/Music";
+import MusicModel from "../models/MusicModel";
 
 export default function GuessMusics() {
   const { slug } = useParams();
@@ -21,25 +21,7 @@ export default function GuessMusics() {
   const [startCountdown, setStartCountdown] = useState<boolean>(false);
   const [isCountdownDone, setIsCountdownDone] = useState<boolean>(false);
 
-  const [musics, setMusics] = useState<Music[]>([]);
-
-  function handleStart() {
-    setIsCountdownDone(false);
-    setStartCountdown(true);
-    if (artist) fetchArtistMusics(artist.name);
-  }
-
-  function handleIsDoneCountdown() {
-    setIsCountdownDone(true);
-  }
-
-  async function fetchArtistMusics(artistName: string) {
-    setMusics(musicsTest);
-    // try {
-    //   const musics = await getMusicsByArtist(artistName);
-    //   setMusics(musics.data.results);
-    // } catch (error) {}
-  }
+  const [musics, setMusics] = useState<MusicModel[]>([]);
 
   useEffect(() => {
     const findedArtist: ArtistModel | undefined = ARTISTS.find(
@@ -51,26 +33,43 @@ export default function GuessMusics() {
     setArtist(findedArtist);
   }, []);
 
+  async function fetchArtistMusics(artistName: string) {
+    setMusics(musicsTest);
+    // try {
+    //   const musics = await getMusicsByArtist(artistName);
+    //   setMusics(musics.data.results);
+    // } catch (error) {}
+  }
+
+  function handleStartRound() {
+    setIsCountdownDone(false);
+    setStartCountdown(true);
+    if (artist) fetchArtistMusics(artist.name);
+  }
+
+  function addPoints(newPoints: number): void{
+    setPoints(points + newPoints);
+  }
+
   return (
     <>
       {isCountdownDone ? (
         <GuessMusic
           musics={musics}
-          onRoundEnd={handleStart}
-          currentPoints={points}
-          setPoints={setPoints}
+          onRoundEnd={handleStartRound}
+          addPoints={addPoints}
         />
       ) : (
         <>
           {startCountdown ? (
             <Countdown
               seconds={COUNTDOWN_SECONDS}
-              onCountdownDone={handleIsDoneCountdown}
+              onCountdownDone={() => setIsCountdownDone(true)}
             />
           ) : (
             <button
               className="border-2 border-black bg-yellow-300 p-4 font-display"
-              onClick={handleStart}
+              onClick={handleStartRound}
             >
               Start
             </button>

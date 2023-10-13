@@ -1,85 +1,38 @@
 import { useState, useEffect } from "react";
-import Music from "../models/Music";
+import MusicModel from "../models/MusicModel";
 import MusicPlayer from "./MusicPlayer";
-import { MAX_PLAY_MUSIC_SECONDS, MAX_RANDOM_MUSICS_LENGTH } from "../commom/constants";
+import {
+  MAX_PLAY_MUSIC_SECONDS,
+  MAX_RANDOM_MUSICS_LENGTH,
+  POSSIBLE_POINTS_BY_ROUND,
+} from "../commom/constants";
+
+import { randomIndex, randomizeMusic } from "../commom/functions";
 
 type GuessMusicProps = {
-  musics: Music[];
-  currentPoints: number;
-  setPoints: (newPoints: number) => void;
+  musics: MusicModel[];
+  addPoints: (newPoints: number) => void;
   onRoundEnd: () => void;
 };
 
 export default function GuessMusic(props: GuessMusicProps) {
-  const { musics, onRoundEnd, currentPoints, setPoints } = props;
-  const [randomMusics, setRandomMusics] = useState<Music[]>([]);
+  const { musics, addPoints, onRoundEnd } = props;
 
-  const [correctMusic, setCorrectMusic] = useState<Music>();
-  const [currentTime, setCurrentTime] = useState<number>(0);
+  const [endRound, setEndRound] = useState<boolean>(false);
 
-  const [selectedMusic, setSelectedMusic] = useState<Music | null>(null);
-  const [canChoice, setCanChoice] = useState<boolean>(true);
-
-  const timesUp = currentTime >= MAX_PLAY_MUSIC_SECONDS;
+  const [randomMusics, setRandomMusics] = useState<MusicModel[]>([]);
+  const [correctMusic, setCorrectMusic] = useState<MusicModel>();
+  const [choicedMusic, setChoicedMusic] = useState<MusicModel | null>(null);
 
   useEffect(() => {
-    const newRandomMusics: Music[] = [];
+    const newRandomMusics: MusicModel[] = [];
 
-    for (let i: number = 0; i < MAX_RANDOM_MUSICS_LENGTH; i++) {
-      let alreadyAddedMusic: boolean = true;
-      let randomMusic: Music = randomizeMusic();
-
-      while (alreadyAddedMusic) {
-        randomMusic = randomizeMusic();
-
-        alreadyAddedMusic = checkMusicAlreadyAdded(
-          randomMusic,
-          newRandomMusics
-        );
-      }
-
-      newRandomMusics.push(randomMusic);
-    }
+    for (let i: number = 0; i < MAX_RANDOM_MUSICS_LENGTH; i++)
+      newRandomMusics.push(randomizeMusic(musics));
 
     setCorrectMusic(newRandomMusics[randomIndex(newRandomMusics.length)]);
     setRandomMusics(newRandomMusics);
   }, [musics]);
-
-  function randomizeMusic(): Music {
-    const musicsLength = musics.length;
-    const index = randomIndex(musicsLength);
-
-    return musics[index];
-  }
-
-  function randomIndex(length: number) {
-    return Math.floor(Math.random() * length);
-  }
-
-  function checkMusicAlreadyAdded(music: Music, musicList: Music[]): boolean {
-    const isAdded = !!musicList.find((musicFinded: Music) =>
-      musicFinded.trackName.includes(music.trackName)
-    );
-
-    return isAdded;
-  }
-
-  function choiceMusic(music: Music): void {
-    setSelectedMusic(music);
-  }
-
-  function checkCorrectChoice(): boolean {
-    if (selectedMusic) return selectedMusic.trackId === correctMusic?.trackId;
-
-    return false;
-  }
-
-  if (timesUp) {
-    setTimeout(() => {
-      onRoundEnd();
-      if (checkCorrectChoice()) setPoints(currentPoints + 100);
-    }, 3000);
-  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -87,24 +40,22 @@ export default function GuessMusic(props: GuessMusicProps) {
         <MusicPlayer
           music={correctMusic}
           maxPlayTime={MAX_PLAY_MUSIC_SECONDS}
-          currentTime={currentTime}
-          setCurrentTime={setCurrentTime}
+          endRound={() => setEndRound(true)}
         />
       )}
-      {randomMusics.map((music: Music) => (
+      {randomMusics.map((music: MusicModel) => (
         <button
-          disabled={timesUp}
+          disabled={endRound}
           className={`border-2 p-4 text-white ${
-            timesUp && correctMusic?.trackId === music.trackId
+            endRound && correctMusic?.trackId === music.trackId
               ? "bg-green-600"
               : "disabled:bg-gray-400"
           }`}
-          onClick={() => choiceMusic(music)}
+          onClick={() => setChoicedMusic(music)}
         >
           {music.trackName} - {music.trackId}{" "}
         </button>
       ))}
-      <h1 className="text-blue-300">PONTOS {currentPoints}</h1>
     </div>
   );
 }

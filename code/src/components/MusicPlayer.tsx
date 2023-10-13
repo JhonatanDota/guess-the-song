@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
-import Music from "../models/Music";
+import MusicModel from "../models/MusicModel";
 import MusicProgressBar from "./MusicProgressBar";
 
 type MusicPlayerProps = {
-  music: Music;
+  music: MusicModel;
   maxPlayTime: number;
-  currentTime: number;
-  setCurrentTime: (newTime: number) => void;
+  endRound: () => void;
 };
 
 export default function MusicPlayer(props: MusicPlayerProps) {
-  const { music, maxPlayTime, currentTime, setCurrentTime } = props;
+  const { music, maxPlayTime, endRound } = props;
+
+  const [currentTime, setCurrentTime] = useState<number>(0);
+
   const [song] = useState(new Audio(music.previewUrl));
 
   function start() {
@@ -27,6 +29,7 @@ export default function MusicPlayer(props: MusicPlayerProps) {
 
       if (newTime >= maxPlayTime) {
         song.pause();
+        endRound();
       }
     });
 
