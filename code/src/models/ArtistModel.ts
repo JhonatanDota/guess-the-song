@@ -3,5 +3,6 @@ export default interface ArtistModel {
     slug: string;
     name: string;
     searchableName: string;
+    genre: string;
     image: string;
   }
