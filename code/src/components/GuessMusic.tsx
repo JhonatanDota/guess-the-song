@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Music from "../models/Music";
 import MusicPlayer from "./MusicPlayer";
+import { MAX_PLAY_MUSIC_SECONDS, MAX_RANDOM_MUSICS_LENGTH } from "../commom/constants";
 
 type GuessMusicProps = {
   musics: Music[];
@@ -11,9 +12,6 @@ type GuessMusicProps = {
 
 export default function GuessMusic(props: GuessMusicProps) {
   const { musics, onRoundEnd, currentPoints, setPoints } = props;
-  const MAX_RANDOM_MUSICS_LENGTH = 4;
-  const MAX_PLAY_MUSIC_SECONDS = 5;
-
   const [randomMusics, setRandomMusics] = useState<Music[]>([]);
 
   const [correctMusic, setCorrectMusic] = useState<Music>();

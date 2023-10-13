@@ -6,6 +6,7 @@ import ARTISTS from "../data/artists";
 import Countdown from "../components/Countdown";
 import getMusicsByArtist from "../requests/getMusicsByArtist";
 import GuessMusic from "../components/GuessMusic";
+import { COUNTDOWN_SECONDS } from "../commom/constants";
 
 import { musicsTest } from "../data/musicsTest.js";
 import Music from "../models/Music";
@@ -13,8 +14,6 @@ import Music from "../models/Music";
 export default function GuessMusics() {
   const { slug } = useParams();
   const navigate = useNavigate();
-
-  const COUNTDOWN_SECONDS = 3;
 
   const [points, setPoints] = useState<number>(0);
 
