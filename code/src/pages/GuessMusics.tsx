@@ -62,16 +62,21 @@ export default function GuessMusics() {
           setPoints={setPoints}
         />
       ) : (
-        <div className="text-white">
-          <button onClick={handleStart}>Comecar</button>
-
-          {startCountdown && (
+        <>
+          {startCountdown ? (
             <Countdown
               seconds={COUNTDOWN_SECONDS}
               onCountdownDone={handleIsDoneCountdown}
             />
+          ) : (
+            <button
+              className="border-2 border-black bg-yellow-300 p-4 font-display"
+              onClick={handleStart}
+            >
+              Start
+            </button>
           )}
-        </div>
+        </>
       )}
     </>
   );
