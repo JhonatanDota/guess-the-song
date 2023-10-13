@@ -43,15 +43,12 @@ export default function GuessMusic(props: GuessMusicProps) {
           endRound={() => setEndRound(true)}
         />
       )}
-      {randomMusics.map((music: MusicModel) => (
+      {randomMusics.map((music: MusicModel, index: number) => (
         <button
+          key={index}
           disabled={endRound}
-          className={`border-2 p-4 text-white ${
-            endRound && correctMusic?.trackId === music.trackId
-              ? "bg-green-600"
-              : "disabled:bg-gray-400"
-          }`}
-          onClick={() => setChoicedMusic(music)}
+          className={`border-2 p-4 text-white ${choicedMusic?.trackId == music.trackId ? "bg-green-600" : ""}`}
+          onClick={() => endRound ? null : setChoicedMusic(music)}
         >
           {music.trackName} - {music.trackId}{" "}
         </button>
