@@ -7,7 +7,11 @@ import {
   POSSIBLE_POINTS_BY_ROUND,
 } from "../commom/constants";
 
-import { randomIndex, randomizeMusic, checkCorrectChoice } from "../commom/functions";
+import {
+  randomIndex,
+  randomizeMusic,
+  checkCorrectChoice,
+} from "../commom/functions";
 
 type GuessMusicProps = {
   musics: MusicModel[];
@@ -37,7 +41,8 @@ export default function GuessMusic(props: GuessMusicProps) {
   if (endRound) {
     setTimeout(() => {
       onRoundEnd();
-      if (checkCorrectChoice(choicedMusic, correctMusic)) addPoints(POSSIBLE_POINTS_BY_ROUND);
+      if (checkCorrectChoice(choicedMusic, correctMusic))
+        addPoints(POSSIBLE_POINTS_BY_ROUND);
     }, 3000);
   }
 
@@ -64,7 +69,7 @@ export default function GuessMusic(props: GuessMusicProps) {
         </button>
       ))}
 
-      {endRound && <h1 className="text-white">{correctMusic?.trackName}</h1>}
+      {endRound && <h1 className="text-red-300">{correctMusic?.trackName}</h1>}
     </div>
   );
 }

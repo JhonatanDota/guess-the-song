@@ -3,14 +3,19 @@ import { NavLink } from "react-router-dom";
 
 type ArtistsCardProps = {
   artist: ArtistModel;
+  setBgImage: (bgImage: string | null) => void;
 };
 
 export default function ArtistsCard(props: ArtistsCardProps) {
-  const { artist } = props;
+  const { artist, setBgImage } = props;
 
   return (
     <NavLink to={`/guess/${artist.slug}/`}>
-      <div className="relative rounded-md cursor-pointer border-2 border-slate-900/30 h-48 md:h-64 lg:h-80 w-full transition-all delay-100 hover:scale-105">
+      <div
+        onMouseEnter={() => setBgImage(artist.image)}
+        onMouseLeave={() => setBgImage(null)}
+        className="relative rounded-md cursor-pointer border-2 border-slate-900/30 h-48 md:h-64 lg:h-80 w-full transition-all delay-75 hover:scale-105"
+      >
         <img
           className="rounded-md h-full w-full object-cover"
           src={artist.image}
