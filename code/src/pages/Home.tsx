@@ -5,7 +5,7 @@ import ARTISTS from "../data/artists";
 import Filters from "../components/Filters";
 
 export default function Home() {
-  const [artists, setArtists] = useState<ArtistModel[]>([]);
+  const [artists, setArtists] = useState<ArtistModel[]>(ARTISTS);
   const [bgImage, setBgImage] = useState<string | null>(null);
 
   function setImage(newImage: string | null) {

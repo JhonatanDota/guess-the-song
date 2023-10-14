@@ -3,8 +3,12 @@ import ARTISTS, { MUSIC_GENRES_LIST } from "../../data/artists";
 import ArtistModel from "../../models/ArtistModel";
 import FiltersProps from "../../models/FiltersProps";
 
-export default function GenreFilter(props: FiltersProps) {
-  const { artists, setArtists } = props;
+type GenreFilterProps = FiltersProps & {
+  haveSearchByName: boolean;
+};
+
+export default function GenreFilter(props: GenreFilterProps) {
+  const { artists, setArtists, haveSearchByName } = props;
 
   const [filteredGenres, setFilteredGenres] = useState<string[]>([]);
 

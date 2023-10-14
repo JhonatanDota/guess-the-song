@@ -3,12 +3,18 @@ import { BsSearch } from "react-icons/bs";
 import ArtistModel from "../../models/ArtistModel";
 import FiltersProps from "../../models/FiltersProps";
 
-export default function SearchNameFilter(props: FiltersProps) {
-  const { artists, setArtists } = props;
+type SearchNameFilterProps = FiltersProps & {
+  setHaveSearchByName: (haveSearchFilter: boolean) => void;
+};
+
+export default function SearchNameFilter(props: SearchNameFilterProps) {
+  const { artists, setArtists, setHaveSearchByName } = props;
 
   const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
+    setHaveSearchByName(!!search);
+
     setArtists(filterArtistsByName(search));
   }, [search]);
 
