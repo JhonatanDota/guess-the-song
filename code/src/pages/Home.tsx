@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import ArtistsCard from "../components/ArtistCard";
 import ArtistModel from "../models/ArtistModel";
 import ARTISTS from "../data/artists";
+import GenreFilter from "../components/GenreFilter";
 
 export default function Home() {
+  const [artists, setArtists] = useState<ArtistModel[]>(ARTISTS);
   const [bgImage, setBgImage] = useState<string | null>(null);
 
   function setImage(newImage: string | null) {
@@ -14,13 +16,19 @@ export default function Home() {
     }, 200);
   }
 
+  const memoizedGenreFilter = useMemo(
+    () => <GenreFilter setArtists={setArtists} />,
+    [artists]
+  );
+
   return (
     <div className="flex flex-col text-white p-6 md:p-8 lg:p-12 gap-4 md:gap-6">
       <h1 className="font-bold text-center text-4xl md:text-5xl font-display">
         Guess the Music
       </h1>
+      {memoizedGenreFilter}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {ARTISTS.map((artist: ArtistModel) => (
+        {artists.map((artist: ArtistModel) => (
           <ArtistsCard
             key={artist.slug}
             artist={artist}

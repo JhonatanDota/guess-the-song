@@ -7,12 +7,19 @@ import eminem from "./artists_images/eminem.jpg";
 import ed_sheeran from "./artists_images/ed_sheeran.jpg";
 import tim_maia from "./artists_images/tim_maia.jpg";
 
-const MUSIC_GENRES = {
-  POP: "POP",
-  ROCK: "ROCK",
-  RAP: "RAP",
-  BRAZILIAN: "BRAZILIAN",
-}
+export const MUSIC_GENRES = {
+  POP: "Pop",
+  ROCK: "Rock",
+  RAP: "Rap",
+  BRAZILIAN: "Brasileira",
+};
+
+export const MUSIC_GENRES_LIST: string[] = [
+  MUSIC_GENRES.POP,
+  MUSIC_GENRES.ROCK,
+  MUSIC_GENRES.RAP,
+  MUSIC_GENRES.BRAZILIAN,
+];
 
 const ARTISTS: ArtistModel[] = [
   {
@@ -20,8 +27,8 @@ const ARTISTS: ArtistModel[] = [
     slug: "katy-perry",
     name: "Katy Perry",
     searchableName: "katy perry",
-    genre: MUSIC_GENRES.POP,
-    image: katy_perry_image
+    genres: [MUSIC_GENRES.POP],
+    image: katy_perry_image,
   },
 
   {
@@ -29,7 +36,7 @@ const ARTISTS: ArtistModel[] = [
     slug: "linkin-park",
     name: "Linkin Park",
     searchableName: "linkin park",
-    genre: MUSIC_GENRES.ROCK,
+    genres: [MUSIC_GENRES.ROCK],
     image: linkin_park_image,
   },
 
@@ -38,7 +45,7 @@ const ARTISTS: ArtistModel[] = [
     slug: "dua-lipa",
     name: "Dua Lipa",
     searchableName: "dua lipa",
-    genre: MUSIC_GENRES.POP,
+    genres: [MUSIC_GENRES.POP],
     image: dua_lipa,
   },
 
@@ -47,7 +54,7 @@ const ARTISTS: ArtistModel[] = [
     slug: "eminem",
     name: "Eminem",
     searchableName: "eminem",
-    genre: MUSIC_GENRES.RAP,
+    genres: [MUSIC_GENRES.RAP],
     image: eminem,
   },
 
@@ -56,7 +63,7 @@ const ARTISTS: ArtistModel[] = [
     slug: "ed-sheeran",
     name: "Ed Sheeran",
     searchableName: "ed sheeran",
-    genre: MUSIC_GENRES.POP,
+    genres: [MUSIC_GENRES.POP],
     image: ed_sheeran,
   },
 
@@ -65,7 +72,7 @@ const ARTISTS: ArtistModel[] = [
     slug: "tim-maia",
     name: "Tim Maia",
     searchableName: "tim maia",
-    genre: MUSIC_GENRES.BRAZILIAN,
+    genres: [MUSIC_GENRES.BRAZILIAN],
     image: tim_maia,
   },
 ];
