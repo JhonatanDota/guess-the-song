@@ -38,7 +38,7 @@ export default function Home() {
       </div>
 
       <div
-        className={`fixed top-0 left-0 h-screen w-full bg-cover bg-no-repeat z-[-5] transition-opacity delay-100 ${
+        className={`fixed top-0 left-0 h-screen w-full bg-cover bg-center bg-no-repeat z-[-5] transition-opacity delay-100 ${
           bgImage ? "opacity-50" : "opacity-0"
         }`}
         style={{ backgroundImage: `url(${bgImage})` }}
