@@ -32,16 +32,16 @@ export default function GenreFilter(props: GenreFilterProps) {
 
   return (
     <div className="w-full">
-      <div className="flex justify-center gap-3 w-1/2 m-auto">
+      <div className="grid grid-cols-3 gap-3 md:gap-6 text-center">
         {MUSIC_GENRES_LIST.map((genre: string) => (
           <div
             key={genre}
             onClick={() => handleGenre(genre)}
-            className={`rounded-lg text-black p-3 cursor-pointer ${
-              isGenreFiltered(genre) ? "bg-blue-200" : "bg-green-100"
+            className={`rounded-full text-black text-sm md:text-base lg:text-lg font-bold p-2 md:p-3 cursor-pointer transition-colors delay-75 ${
+              isGenreFiltered(genre) ? "bg-green-500" : "bg-slate-400/80"
             }`}
           >
-            <p>{genre}</p>
+            <p className="select-none">{genre}</p>
           </div>
         ))}
       </div>
