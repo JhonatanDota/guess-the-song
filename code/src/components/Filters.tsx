@@ -7,7 +7,7 @@ export default function Filters(props: FiltersProps) {
 
   return (
     <div className="w-full flex flex-col">
-      <GenreFilter artists={artists} setArtists={setArtists} />
+      {/* <GenreFilter artists={artists} setArtists={setArtists} /> */}
       <SearchNameFilter artists={artists} setArtists={setArtists} />
     </div>
   );
