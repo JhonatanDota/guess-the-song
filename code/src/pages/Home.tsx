@@ -5,7 +5,7 @@ import ARTISTS from "../data/artists";
 import GenreFilter from "../components/GenreFilter";
 
 export default function Home() {
-  const [artists, setArtists] = useState<ArtistModel[]>(ARTISTS);
+  const [artists, setArtists] = useState<ArtistModel[]>([]);
   const [bgImage, setBgImage] = useState<string | null>(null);
 
   function setImage(newImage: string | null) {
@@ -17,7 +17,7 @@ export default function Home() {
   }
 
   const memoizedGenreFilter = useMemo(
-    () => <GenreFilter setArtists={setArtists} />,
+    () => <GenreFilter artists={ARTISTS} setArtists={setArtists} />,
     [artists]
   );
 

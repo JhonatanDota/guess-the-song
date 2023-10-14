@@ -1,15 +1,37 @@
-import { useState } from "react";
-import { MUSIC_GENRES_LIST } from "../data/artists";
+import { useState, useEffect } from "react";
+import ARTISTS, { MUSIC_GENRES_LIST } from "../data/artists";
 import ArtistModel from "../models/ArtistModel";
 
 type GenreFilterProps = {
+  artists: ArtistModel[];
   setArtists: (artists: ArtistModel[]) => void;
 };
 
 export default function GenreFilter(props: GenreFilterProps) {
-  const { setArtists } = props;
+  const { artists, setArtists } = props;
 
   const [filteredGenres, setFilteredGenres] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (filteredGenres.length) filterArtists();
+    else setArtists(ARTISTS);
+  }, [filteredGenres]);
+
+  function filterArtists(): void {
+    const filteredArtists: ArtistModel[] = artists.filter(
+      (artist: ArtistModel) => toFilterArtist(artist)
+    );
+
+    setArtists(filteredArtists);
+  }
+
+  function toFilterArtist(artist: ArtistModel): boolean {
+    const toFilter: boolean = artist.genres.some((genre: string) =>
+      filteredGenres.includes(genre)
+    );
+
+    return toFilter;
+  }
 
   function handleGenre(genre: string): void {
     let newFilteredGenres: string[] = [...filteredGenres];
