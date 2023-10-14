@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
-import ARTISTS, { MUSIC_GENRES_LIST } from "../data/artists";
-import ArtistModel from "../models/ArtistModel";
+import ARTISTS, { MUSIC_GENRES_LIST } from "../../data/artists";
+import ArtistModel from "../../models/ArtistModel";
+import FiltersProps from "../../models/FiltersProps";
 
-type GenreFilterProps = {
-  artists: ArtistModel[];
-  setArtists: (artists: ArtistModel[]) => void;
-};
-
-export default function GenreFilter(props: GenreFilterProps) {
+export default function GenreFilter(props: FiltersProps) {
   const { artists, setArtists } = props;
 
   const [filteredGenres, setFilteredGenres] = useState<string[]>([]);
@@ -53,13 +49,13 @@ export default function GenreFilter(props: GenreFilterProps) {
   }
 
   return (
-    <div className="w-full">
-      <div className="grid grid-cols-3 gap-3 md:gap-6 text-center">
+    <>
+      <div className="grid grid-cols-3 gap-3 text-center p-4">
         {MUSIC_GENRES_LIST.map((genre: string) => (
           <div
             key={genre}
             onClick={() => handleGenre(genre)}
-            className={`rounded-full text-black text-sm md:text-base lg:text-lg font-bold p-2 md:p-3 cursor-pointer transition-colors delay-75 ${
+            className={`rounded-full text-black text-sm md:text-base font-bold p-2 md:p-3 cursor-pointer transition-colors delay-75 ${
               isGenreFiltered(genre) ? "bg-green-500" : "bg-slate-400/80"
             }`}
           >
@@ -67,6 +63,6 @@ export default function GenreFilter(props: GenreFilterProps) {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 }

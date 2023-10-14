@@ -1,15 +1,14 @@
-import GenreFilter from "./GenreFilter";
-import ArtistModel from "../models/ArtistModel";
+import FiltersProps from "../models/FiltersProps";
+import GenreFilter from "./filters/GenreFilter";
+import SearchNameFilter from "./filters/SearchNameFilter";
 
-type FiltersProps = {
-    artists: ArtistModel[];
-    setArtists: (artists: ArtistModel[]) => void;
-}
+export default function Filters(props: FiltersProps) {
+  const { artists, setArtists } = props;
 
-export default function Filters(props: FiltersProps){
-    const { artists, setArtists } = props;
-
-    return(
-        <GenreFilter artists={artists} setArtists={setArtists}/>
-    );
+  return (
+    <div className="w-full flex flex-col">
+      <GenreFilter artists={artists} setArtists={setArtists} />
+      <SearchNameFilter artists={artists} setArtists={setArtists} />
+    </div>
+  );
 }
