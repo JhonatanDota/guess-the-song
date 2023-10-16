@@ -7,7 +7,7 @@ import Countdown from "../components/Countdown";
 import getMusicsByArtist from "../requests/getMusicsByArtist";
 import GuessMusic from "../components/GuessMusic";
 import { COUNTDOWN_SECONDS } from "../commom/constants";
-import { BsPlayFill } from "react-icons/bs";
+import { BsPlayFill, BsFillReplyFill } from "react-icons/bs";
 
 import { musicsTest } from "../data/musicsTest.js";
 import MusicModel from "../models/MusicModel";
@@ -68,18 +68,25 @@ export default function GuessMusics() {
               onCountdownDone={() => setIsCountdownDone(true)}
             />
           ) : (
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex w-full justify-around">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col w-2/4 gap-6">
               <button
-                className="text-2xl border-2 border-yellow-300/80 bg-yellow-300/70 tracking-widest p-4 font-display"
-              >
-                Voltar
-              </button>
-              <button
-                className="flex items-center text-2xl text-zinc-100/80  border-2 border-zinc-100/80 rounded-md bg-green-600/70 p-4 font-display"
+                className="uppercase flex justify-between items-center p-2 rounded-md text-2xl text-white bg-[#008000] font-bold"
                 onClick={handleStartRound}
               >
-                Start
-                <BsPlayFill/>
+                <p className="m-auto">Iniciar</p>
+                <div className="relative bg-[#38b000] rounded-r-md">
+                  <BsPlayFill className="inline-block m-2" fill="white" />
+                </div>
+              </button>
+
+              <button
+                onClick={() => navigate("/")}
+                className="uppercase flex justify-between items-center p-2 rounded-md text-2xl text-white bg-[#ff8a15fd] font-bold"
+              >
+                <div className="relative bg-[#f6a437] rounded-l-md">
+                  <BsFillReplyFill className="inline-block m-2" fill="white" />
+                </div>
+                <p className="m-auto">Voltar</p>
               </button>
             </div>
           )}
