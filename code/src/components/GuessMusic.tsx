@@ -38,22 +38,27 @@ export default function GuessMusic(props: GuessMusicProps) {
     setRandomMusics(newRandomMusics);
   }, []);
 
-  if (endRound) {
-    setTimeout(() => {
-      onRoundEnd();
-      if (checkCorrectChoice(choicedMusic, correctMusic))
-        addPoints(POSSIBLE_POINTS_BY_ROUND);
-    }, 3000);
-  }
+  // if (endRound) {
+  //   setTimeout(() => {
+  //     onRoundEnd();
+  //     if (checkCorrectChoice(choicedMusic, correctMusic))
+  //       addPoints(POSSIBLE_POINTS_BY_ROUND);
+  //   }, 3000);
+  // }
 
   return (
     <div className="flex flex-col gap-3">
       {correctMusic && (
-        <MusicPlayer
-          music={correctMusic}
-          maxPlayTime={MAX_PLAY_MUSIC_SECONDS}
-          endRound={() => setEndRound(true)}
-        />
+        <div className="w-2/3 m-auto flex flex-col items-center p-4 gap-3 bg-white/50">
+          <p className="font-bold">Rodada 5</p>
+          <div className="w-full">
+            <MusicPlayer
+              music={correctMusic}
+              maxPlayTime={MAX_PLAY_MUSIC_SECONDS}
+              endRound={() => setEndRound(true)}
+            />
+          </div>
+        </div>
       )}
 
       {randomMusics.map((music: MusicModel, index: number) => (

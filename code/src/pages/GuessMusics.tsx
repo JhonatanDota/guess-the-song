@@ -55,11 +55,14 @@ export default function GuessMusics() {
   return (
     <>
       {isCountdownDone ? (
+        <>
         <GuessMusic
           musics={musics}
           onRoundEnd={handleStartRound}
           addPoints={addPoints}
         />
+        <h1 className="text-blue-300">{points}</h1>
+        </>
       ) : (
         <>
           {startCountdown ? (
@@ -68,7 +71,7 @@ export default function GuessMusics() {
               onCountdownDone={() => setIsCountdownDone(true)}
             />
           ) : (
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col w-2/4 md:w-1/4 lg:w-1/5 gap-6">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col w-2/4 md:w-1/4 lg:w-1/5 gap-6 md:gap-10">
               <button
                 className="uppercase flex justify-between items-center p-2 rounded-md text-2xl md:text-3xl lg:text-4xl text-white bg-[#008000] font-bold"
                 onClick={handleStartRound}

@@ -3,5 +3,12 @@ type MusicProgressBarProps = {
 };
 
 export default function MusicProgressBar(props: MusicProgressBarProps) {
-  return <progress value={props.progress} max="100"></progress>;
+  return (
+    <div className="p-2 bg-gray-200 rounded-full">
+      <div
+        className="bg-blue-500 h-2.5 rounded-full transition-width duration-500 max-w-full"
+        style={{ width: `${props.progress}%` }}
+      ></div>
+    </div>
+  );
 }

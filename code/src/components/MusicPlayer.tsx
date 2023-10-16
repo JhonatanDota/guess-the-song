@@ -40,11 +40,5 @@ export default function MusicPlayer(props: MusicPlayerProps) {
 
   const progress = (currentTime / maxPlayTime) * 100;
 
-  return (
-    <div>
-      <h1 className="text-white">{currentTime}</h1>
-      <MusicProgressBar progress={progress} />
-      <button className="text-white">PLAYYYYYYYYYY</button>
-    </div>
-  );
+  return <MusicProgressBar progress={progress} />;
 }
