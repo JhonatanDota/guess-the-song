@@ -68,22 +68,22 @@ export default function GuessMusics() {
               onCountdownDone={() => setIsCountdownDone(true)}
             />
           ) : (
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col w-2/4 gap-6">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col w-2/4 md:w-1/4 lg:w-1/6 gap-6">
               <button
-                className="uppercase flex justify-between items-center p-2 rounded-md text-2xl text-white bg-[#008000] font-bold"
+                className="uppercase flex justify-between items-center p-2 rounded-md text-2xl md:text-3xl lg:text-4xl text-white bg-[#008000] font-bold"
                 onClick={handleStartRound}
               >
                 <p className="m-auto">Iniciar</p>
-                <div className="relative bg-[#38b000] rounded-r-md">
+                <div className="bg-[#38b000] rounded-r-md">
                   <BsPlayFill className="inline-block m-2" fill="white" />
                 </div>
               </button>
 
               <button
                 onClick={() => navigate("/")}
-                className="uppercase flex justify-between items-center p-2 rounded-md text-2xl text-white bg-[#ff8a15fd] font-bold"
+                className="uppercase flex justify-between items-center p-2 rounded-md text-2xl md:text-3xl lg:text-4xl text-white bg-[#ff8a15fd] font-bold"
               >
-                <div className="relative bg-[#f6a437] rounded-l-md">
+                <div className="bg-[#f6a437] rounded-l-md">
                   <BsFillReplyFill className="inline-block m-2" fill="white" />
                 </div>
                 <p className="m-auto">Voltar</p>
