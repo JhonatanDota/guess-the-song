@@ -17,10 +17,11 @@ type GuessMusicProps = {
   musics: MusicModel[];
   addPoints: (newPoints: number) => void;
   onRoundEnd: () => void;
+  round: number;
 };
 
 export default function GuessMusic(props: GuessMusicProps) {
-  const { musics, addPoints, onRoundEnd } = props;
+  const { musics, addPoints, onRoundEnd, round } = props;
 
   const [endRound, setEndRound] = useState<boolean>(false);
 
@@ -49,8 +50,8 @@ export default function GuessMusic(props: GuessMusicProps) {
   return (
     <div className="flex flex-col gap-3">
       {correctMusic && (
-        <div className="w-2/3 m-auto flex flex-col items-center p-4 gap-3 bg-white/50">
-          <p className="font-bold">Rodada 5</p>
+        <div className="w-2/3 m-auto flex flex-col items-center p-4 gap-3 bg-white/50 rounded-b-lg">
+          <p className="font-bold">Rodada {round}</p>
           <div className="w-full">
             <MusicPlayer
               music={correctMusic}

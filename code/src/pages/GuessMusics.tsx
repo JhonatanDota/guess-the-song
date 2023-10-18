@@ -16,7 +16,9 @@ export default function GuessMusics() {
   const { slug } = useParams();
   const navigate = useNavigate();
 
+  const [round, setRound] = useState<number>(0);
   const [points, setPoints] = useState<number>(0);
+  const [endGame, setEndGame] = useState<boolean>(false);
 
   const [artist, setArtist] = useState<ArtistModel>();
   const [startCountdown, setStartCountdown] = useState<boolean>(false);
@@ -44,6 +46,7 @@ export default function GuessMusics() {
 
   function handleStartRound() {
     if (artist) fetchArtistMusics(artist.name);
+    setRound(round + 1);
     setIsCountdownDone(false);
     setStartCountdown(true);
   }
@@ -56,12 +59,13 @@ export default function GuessMusics() {
     <>
       {isCountdownDone ? (
         <>
-        <GuessMusic
-          musics={musics}
-          onRoundEnd={handleStartRound}
-          addPoints={addPoints}
-        />
-        <h1 className="text-blue-300">{points}</h1>
+          <GuessMusic
+            musics={musics}
+            onRoundEnd={handleStartRound}
+            addPoints={addPoints}
+            round={round}
+          />
+          <h1 className="text-blue-300">{points}</h1>
         </>
       ) : (
         <>

@@ -12,7 +12,6 @@ export default function MusicPlayer(props: MusicPlayerProps) {
   const { music, maxPlayTime, endRound } = props;
 
   const [currentTime, setCurrentTime] = useState<number>(0);
-
   const [song] = useState(new Audio(music.previewUrl));
 
   function start() {
@@ -23,7 +22,7 @@ export default function MusicPlayer(props: MusicPlayerProps) {
   useEffect(() => {
     start();
 
-    song.addEventListener("timeupdate", () => {
+    function updateProgress(): void {
       const newTime: number = song.currentTime;
       setCurrentTime(newTime);
 
@@ -31,10 +30,15 @@ export default function MusicPlayer(props: MusicPlayerProps) {
         song.pause();
         endRound();
       }
-    });
+    }
+
+    song.addEventListener("timeupdate", updateProgress);
+
+    const progressUpdateInterval = setInterval(updateProgress, 50);
 
     return () => {
-      song.removeEventListener("timeupdate", () => {});
+      song.removeEventListener("timeupdate", updateProgress);
+      clearInterval(progressUpdateInterval);
     };
   }, []);
 
