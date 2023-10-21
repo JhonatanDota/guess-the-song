@@ -37,11 +37,11 @@ export default function GuessMusics() {
   }, []);
 
   async function fetchArtistMusics(artistName: string) {
-    setMusics(musicsTest);
-    // try {
-    //   const musics = await getMusicsByArtist(artistName);
-    //   setMusics(musics.data.results);
-    // } catch (error) {}
+    // setMusics(musicsTest);
+    try {
+      const musics = await getMusicsByArtist(artistName);
+      setMusics(musics.data.results);
+    } catch (error) {}
   }
 
   function handleStartRound() {
