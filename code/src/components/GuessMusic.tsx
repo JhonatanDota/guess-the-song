@@ -50,8 +50,10 @@ export default function GuessMusic(props: GuessMusicProps) {
   return (
     <div className="flex flex-col gap-3">
       {correctMusic && (
-        <div className="w-2/3 m-auto flex flex-col items-center p-4 gap-3 bg-white/50 rounded-b-lg">
-          <p className="font-bold">Rodada {round}</p>
+        <div className="w-2/3 md:w-1/2 m-auto flex flex-col items-center p-4 md:p-8 gap-3 md:gap-6 lg:gap-8 bg-black/70 rounded-b-xl">
+          <p className="text-xl md:text-3xl lg:text-4xl font-bold text-amber-400">
+            Rodada {round}
+          </p>
           <div className="w-full">
             <MusicPlayer
               music={correctMusic}
