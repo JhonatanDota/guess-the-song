@@ -39,13 +39,15 @@ export default function GuessMusic(props: GuessMusicProps) {
     setRandomMusics(newRandomMusics);
   }, []);
 
-  // if (endRound) {
-  //   setTimeout(() => {
-  //     onRoundEnd();
-  //     if (checkCorrectChoice(choicedMusic, correctMusic))
-  //       addPoints(POSSIBLE_POINTS_BY_ROUND);
-  //   }, 3000);
-  // }
+  useEffect(() => {
+    if (endRound) {
+      if (checkCorrectChoice(choicedMusic, correctMusic))
+        addPoints(POSSIBLE_POINTS_BY_ROUND);
+      setTimeout(() => {
+        onRoundEnd();
+      }, 3000);
+    }
+  }, [endRound]);
 
   return (
     <div className="flex flex-col gap-6 py-0 px-3">
