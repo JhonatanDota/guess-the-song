@@ -15,13 +15,14 @@ import {
 
 type GuessMusicProps = {
   musics: MusicModel[];
+  currentPoints: number;
   addPoints: (newPoints: number) => void;
   onRoundEnd: () => void;
   round: number;
 };
 
 export default function GuessMusic(props: GuessMusicProps) {
-  const { musics, addPoints, onRoundEnd, round } = props;
+  const { musics, currentPoints, addPoints, onRoundEnd, round } = props;
 
   const [endRound, setEndRound] = useState<boolean>(false);
 
@@ -56,6 +57,9 @@ export default function GuessMusic(props: GuessMusicProps) {
           <p className="text-xl md:text-3xl lg:text-4xl font-bold text-amber-400">
             Rodada {round}
           </p>
+          <p className="text-base md:text-xl lg:text-2xl text-red-100">
+            Pontos: {currentPoints}
+          </p>
           <div className="w-full">
             <MusicPlayer
               music={correctMusic}
@@ -71,7 +75,11 @@ export default function GuessMusic(props: GuessMusicProps) {
             key={index}
             disabled={endRound}
             className={`w-full md:w-4/5 lg:w-2/3 md:m-auto p-6 md:p-8 lg:p-10 text-white ${
-              choicedMusic?.trackId == music.trackId
+              endRound
+                ? music.trackId == correctMusic?.trackId
+                  ? "bg-green-400"
+                  : "bg-black/70"
+                : choicedMusic?.trackId == music.trackId
                 ? "bg-blue-700/90"
                 : "bg-black/70"
             }`}
@@ -81,7 +89,6 @@ export default function GuessMusic(props: GuessMusicProps) {
           </button>
         ))}
       </div>
-      {endRound && <h1 className="text-red-300">{correctMusic?.trackName}</h1>}
     </div>
   );
 }

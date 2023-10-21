@@ -61,11 +61,11 @@ export default function GuessMusics() {
         <>
           <GuessMusic
             musics={musics}
-            onRoundEnd={handleStartRound}
+            currentPoints={points}
             addPoints={addPoints}
+            onRoundEnd={handleStartRound}
             round={round}
           />
-          <h1 className="text-blue-300">{points}</h1>
         </>
       ) : (
         <>
@@ -77,7 +77,7 @@ export default function GuessMusics() {
           ) : (
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col w-2/4 md:w-1/4 lg:w-1/5 gap-6 md:gap-10">
               <button
-                className="uppercase flex justify-between items-center p-2 rounded-md text-2xl md:text-3xl lg:text-4xl text-white bg-[#008000] font-bold"
+                className="uppercase flex justify-between items-center p-2 md:p-4 rounded-md text-2xl md:text-3xl lg:text-4xl text-white bg-[#008000] font-bold"
                 onClick={handleStartRound}
               >
                 <p className="m-auto">Iniciar</p>
@@ -88,7 +88,7 @@ export default function GuessMusics() {
 
               <button
                 onClick={() => navigate("/")}
-                className="uppercase flex justify-between items-center p-2 rounded-md text-2xl md:text-3xl lg:text-4xl text-white bg-[#ff8a15fd] font-bold"
+                className="uppercase flex justify-between items-center p-2 md:p-4 rounded-md text-2xl md:text-3xl lg:text-4xl text-white bg-[#ff8a15fd] font-bold"
               >
                 <div className="bg-[#f6a437] rounded-l-md">
                   <BsFillReplyFill className="inline-block m-2" fill="white" />
