@@ -48,7 +48,7 @@ export default function GuessMusic(props: GuessMusicProps) {
   // }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-6 py-0 px-3">
       {correctMusic && (
         <div className="w-2/3 md:w-1/2 m-auto flex flex-col items-center p-4 md:p-8 gap-3 md:gap-6 lg:gap-8 bg-black/70 rounded-b-xl">
           <p className="text-xl md:text-3xl lg:text-4xl font-bold text-amber-400">
@@ -63,20 +63,22 @@ export default function GuessMusic(props: GuessMusicProps) {
           </div>
         </div>
       )}
-
-      {randomMusics.map((music: MusicModel, index: number) => (
-        <button
-          key={index}
-          disabled={endRound}
-          className={`border-2 p-4 text-white ${
-            choicedMusic?.trackId == music.trackId ? "bg-green-600" : ""
-          }`}
-          onClick={() => (endRound ? null : setChoicedMusic(music))}
-        >
-          {music.trackName} - {music.trackId}{" "}
-        </button>
-      ))}
-
+      <div className="flex flex-col gap-6 mt-10">
+        {randomMusics.map((music: MusicModel, index: number) => (
+          <button
+            key={index}
+            disabled={endRound}
+            className={`w-full md:w-4/5 lg:w-2/3 md:m-auto p-6 md:p-8 lg:p-10 text-white ${
+              choicedMusic?.trackId == music.trackId
+                ? "bg-blue-700/90"
+                : "bg-black/70"
+            }`}
+            onClick={() => (endRound ? null : setChoicedMusic(music))}
+          >
+            <p className="text-lg md:text-2xl font-bold">{music.trackName}</p>
+          </button>
+        ))}
+      </div>
       {endRound && <h1 className="text-red-300">{correctMusic?.trackName}</h1>}
     </div>
   );
