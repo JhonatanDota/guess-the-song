@@ -48,7 +48,7 @@ export default function GenreFilter(props: GenreFilterProps) {
 
   function isGenreFiltered(toFindGenre: string): boolean {
     return !!filteredGenres.find(
-      (filteredGenre: string) => filteredGenre == toFindGenre
+      (filteredGenre: string) => filteredGenre === toFindGenre
     );
   }
 

@@ -76,10 +76,10 @@ export default function GuessMusic(props: GuessMusicProps) {
             disabled={endRound}
             className={`w-full md:w-4/5 lg:w-2/3 md:m-auto p-6 md:p-8 lg:p-10 text-white ${
               endRound
-                ? music.trackId == correctMusic?.trackId
+                ? music.trackId === correctMusic?.trackId
                   ? "bg-green-400"
                   : "bg-black/70"
-                : choicedMusic?.trackId == music.trackId
+                : choicedMusic?.trackId === music.trackId
                 ? "bg-blue-700/90"
                 : "bg-black/70"
             }`}

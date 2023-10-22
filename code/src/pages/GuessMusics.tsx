@@ -31,13 +31,13 @@ export default function GuessMusics() {
       (artist: ArtistModel) => artist.slug === slug
     );
 
-    if (findedArtist === undefined) navigate("/");
+    if (findedArtist === undefined) return navigate("/");
 
     setArtist(findedArtist);
+    fetchArtistMusics(findedArtist.name);
   }, []);
 
   async function fetchArtistMusics(artistName: string) {
-    // setMusics(musicsTest);
     try {
       const musics = await getMusicsByArtist(artistName);
       setMusics(musics.data.results);
@@ -45,7 +45,6 @@ export default function GuessMusics() {
   }
 
   function handleStartRound() {
-    if (artist) fetchArtistMusics(artist.name);
     setRound(round + 1);
     setIsCountdownDone(false);
     setStartCountdown(true);

@@ -14,7 +14,7 @@ export default function Countdown(props: CountdownProps) {
       if (count > 0) setCount(count - 1);
     }, 1000);
 
-    if (count == 0) onCountdownDone();
+    if (count === 0) onCountdownDone();
 
     return () => {
       clearInterval(countdownInterval);
