@@ -5,12 +5,17 @@ import ArtistModel from "../models/ArtistModel";
 import ARTISTS from "../data/artists";
 import Countdown from "../components/Countdown";
 import getMusicsByArtist from "../requests/getMusicsByArtist";
-import GuessMusic from "../components/GuessMusic";
-import { COUNTDOWN_SECONDS } from "../commom/constants";
+import Round from "../components/Round";
+import {
+  COUNTDOWN_SECONDS,
+  MAX_ROUNDS_COUNT,
+  POSSIBLE_POINTS_BY_ROUND,
+} from "../commom/constants";
 import { BsPlayFill, BsFillReplyFill } from "react-icons/bs";
 
 import { musicsTest } from "../data/musicsTest.js";
 import MusicModel from "../models/MusicModel";
+import EndGame from "../components/EndGame";
 
 export default function GuessMusics() {
   const { slug } = useParams();
@@ -38,14 +43,17 @@ export default function GuessMusics() {
   }, []);
 
   async function fetchArtistMusics(artistName: string) {
-    try {
-      const musics = await getMusicsByArtist(artistName);
-      setMusics(musics.data.results);
-    } catch (error) {}
+    setMusics(musicsTest);
+    // try {
+    //   const musics = await getMusicsByArtist(artistName);
+    //   setMusics(musics.data.results);
+    // } catch (error) {}
   }
 
   function handleStartRound() {
-    setRound(round + 1);
+    if (round === MAX_ROUNDS_COUNT) setEndGame(true);
+    else setRound(round + 1);
+
     setIsCountdownDone(false);
     setStartCountdown(true);
   }
@@ -56,9 +64,16 @@ export default function GuessMusics() {
 
   return (
     <>
-      {isCountdownDone ? (
+      {endGame && artist ? (
+        <EndGame
+          artist={artist}
+          points={points}
+          possiblePoints={MAX_ROUNDS_COUNT * POSSIBLE_POINTS_BY_ROUND}
+          rounds={round}
+        />
+      ) : isCountdownDone ? (
         <>
-          <GuessMusic
+          <Round
             musics={musics}
             currentPoints={points}
             addPoints={addPoints}
@@ -74,26 +89,31 @@ export default function GuessMusics() {
               onCountdownDone={() => setIsCountdownDone(true)}
             />
           ) : (
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col w-2/4 md:w-1/4 lg:w-1/5 gap-6 md:gap-10">
-              <button
-                className="uppercase flex justify-between items-center p-2 md:p-4 rounded-md text-2xl md:text-3xl lg:text-4xl text-white bg-[#008000] font-bold"
-                onClick={handleStartRound}
-              >
-                <p className="m-auto">Iniciar</p>
-                <div className="bg-[#38b000] rounded-r-md">
-                  <BsPlayFill className="inline-block m-2" fill="white" />
-                </div>
-              </button>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/4 md:w-1/4 lg:w-1/5">
+              <div className="flex flex-col gap-6 md:gap-10">
+                <button
+                  className="uppercase flex justify-between items-center p-2 md:p-4 rounded-md text-2xl md:text-3xl lg:text-4xl text-white bg-[#008000] font-bold"
+                  onClick={handleStartRound}
+                >
+                  <p className="m-auto">Iniciar</p>
+                  <div className="bg-[#38b000] rounded-r-md">
+                    <BsPlayFill className="inline-block m-2" fill="white" />
+                  </div>
+                </button>
 
-              <button
-                onClick={() => navigate("/")}
-                className="uppercase flex justify-between items-center p-2 md:p-4 rounded-md text-2xl md:text-3xl lg:text-4xl text-white bg-[#ff8a15fd] font-bold"
-              >
-                <div className="bg-[#f6a437] rounded-l-md">
-                  <BsFillReplyFill className="inline-block m-2" fill="white" />
-                </div>
-                <p className="m-auto">Voltar</p>
-              </button>
+                <button
+                  onClick={() => navigate("/")}
+                  className="uppercase flex justify-between items-center p-2 md:p-4 rounded-md text-2xl md:text-3xl lg:text-4xl text-white bg-[#ff8a15fd] font-bold"
+                >
+                  <div className="bg-[#f6a437] rounded-l-md">
+                    <BsFillReplyFill
+                      className="inline-block m-2"
+                      fill="white"
+                    />
+                  </div>
+                  <p className="m-auto">Voltar</p>
+                </button>
+              </div>
             </div>
           )}
         </>
