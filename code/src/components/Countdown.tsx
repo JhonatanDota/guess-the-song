@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 
 type CountdownProps = {
   seconds: number;
@@ -21,17 +22,31 @@ export default function Countdown(props: CountdownProps) {
     };
   }, [count]);
 
+  function renderTime(countdownProps: TimeProps) {
+    const remainingTime = countdownProps.remainingTime;
+
+    return (
+      <div className="flex justify-center text-white">
+        <p className="text-4xl md:text-5xl font-bold">
+          {remainingTime > 0 && remainingTime}
+        </p>
+      </div>
+    );
+  }
+
   return (
     <>
-      {count > 0 && (
-        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-100">
-          <div className="relative bg-white/80 p-12 md:p-16 lg:p-24 rounded-full">
-            <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl md:text-5xl lg:text-6xl text-black font-bold">
-              {count}
-            </h1>
-          </div>
-        </div>
-      )}
+      <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-100">
+        <CountdownCircleTimer
+          isPlaying
+          duration={seconds}
+          colors="#38b000"
+          strokeWidth={20}
+          trailColor={"#00"}
+        >
+          {renderTime}
+        </CountdownCircleTimer>
+      </div>
     </>
   );
 }
