@@ -12,8 +12,6 @@ import {
   POSSIBLE_POINTS_BY_ROUND,
 } from "../commom/constants";
 import { BsPlayFill, BsFillReplyFill } from "react-icons/bs";
-
-import { musicsTest } from "../data/musicsTest.js";
 import MusicModel from "../models/MusicModel";
 import EndGame from "../components/EndGame";
 
@@ -43,11 +41,10 @@ export default function GuessMusics() {
   }, []);
 
   async function fetchArtistMusics(artistName: string) {
-    setMusics(musicsTest);
-    // try {
-    //   const musics = await getMusicsByArtist(artistName);
-    //   setMusics(musics.data.results);
-    // } catch (error) {}
+    try {
+      const musics = await getMusicsByArtist(artistName);
+      setMusics(musics.data.results);
+    } catch (error) {}
   }
 
   function handleStartRound() {

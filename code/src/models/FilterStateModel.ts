@@ -6,14 +6,8 @@ type FilterDefinition = {
 };
 
 export interface FilterStateModel {
-  genre: {
-    func: (artists: ArtistModel[]) => ArtistModel[];
-    haveFilter: boolean;
-  };
-  searchName: {
-    func: (artists: ArtistModel[]) => ArtistModel[];
-    haveFilter: boolean;
-  };
+  genre: FilterDefinition;
+  searchName: FilterDefinition;
 }
 
 export const DEFAULT_FILTER_STATE: FilterStateModel = {
