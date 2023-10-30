@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FilterStateModel,
-  FILTER_STATE_DEFAULT_DATA,
+  DEFAULT_FILTER_STATE,
 } from "../models/FilterStateModel";
 import ArtistsCard from "../components/ArtistCard";
 import ArtistModel from "../models/ArtistModel";
@@ -9,11 +9,10 @@ import ARTISTS from "../data/artists";
 import Filters from "../components/Filters";
 
 export default function Home() {
-  const [artists, _] = useState<ArtistModel[]>(ARTISTS);
+  const [artists, setArtists] = useState<ArtistModel[]>(ARTISTS);
   const [bgImage, setBgImage] = useState<string | null>(null);
-  const [filters, setFilters] = useState<FilterStateModel>(
-    FILTER_STATE_DEFAULT_DATA
-  );
+  const [filters, setFilters] =
+    useState<FilterStateModel>(DEFAULT_FILTER_STATE);
 
   function setImage(newImage: string | null) {
     setBgImage(null);
@@ -23,8 +22,24 @@ export default function Home() {
     }, 200);
   }
 
-  function handleFilterChange(filter: Partial<FilterStateModel>) {
+  function handleFilterChange(filter: Partial<FilterStateModel>): void {
     setFilters({ ...filters, ...filter });
+  }
+
+  useEffect(() => {
+    applyFilters(filters);
+  }, [filters]);
+
+  function applyFilters(toFilter: FilterStateModel): void {
+    let filteredArtists: ArtistModel[] = ARTISTS;
+
+    if (toFilter.searchName.haveFilter)
+      filteredArtists = toFilter.searchName.func(filteredArtists);
+
+    if (toFilter.genre.haveFilter)
+      filteredArtists = toFilter.genre.func(filteredArtists);
+
+    setArtists(filteredArtists);
   }
 
   return (

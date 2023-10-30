@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { MUSIC_GENRES_LIST } from "../../data/artists";
+import ArtistModel from "../../models/ArtistModel";
 import FiltersPropsModel from "../../models/FiltersPropsModel";
 
 export default function GenreFilter(props: FiltersPropsModel) {
@@ -8,8 +9,26 @@ export default function GenreFilter(props: FiltersPropsModel) {
   const [filteredGenres, setFilteredGenres] = useState<string[]>([]);
 
   useEffect(() => {
-    setFilters({ genre: filteredGenres });
+    setFilters({
+      genre: { func: filterArtists, haveFilter: filteredGenres.length !== 0 },
+    });
   }, [filteredGenres]);
+
+  function filterArtists(artists: ArtistModel[]): ArtistModel[] {
+    const filteredArtists: ArtistModel[] = artists.filter(
+      (artist: ArtistModel) => toFilterArtist(artist)
+    );
+
+    return filteredArtists;
+  }
+
+  function toFilterArtist(artist: ArtistModel): boolean {
+    const toFilter: boolean = artist.genres.some((genre: string) =>
+      filteredGenres.includes(genre)
+    );
+
+    return toFilter;
+  }
 
   function handleGenre(genre: string): void {
     let newFilteredGenres: string[] = [...filteredGenres];
@@ -37,7 +56,7 @@ export default function GenreFilter(props: FiltersPropsModel) {
           <div
             key={genre}
             onClick={() => handleGenre(genre)}
-            className={`rounded-full text-black text-sm md:text-base font-bold p-2 md:p-3 cursor-pointer transition-colors delay-75 ${
+            className={`rounded-full text-black text-sm md:text-base font-bold p-2 md:p-3 cursor-pointer ${
               isGenreFiltered(genre) ? "bg-green-500" : "bg-slate-400/80"
             }`}
           >
