@@ -1,31 +1,15 @@
 import { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import ArtistModel from "../../models/ArtistModel";
-import FiltersProps from "../../models/FiltersProps";
+import FiltersPropsModel from "../../models/FiltersPropsModel";
 
-type SearchNameFilterProps = FiltersProps & {
-  setHaveSearchByName: (haveSearchFilter: boolean) => void;
-};
-
-export default function SearchNameFilter(props: SearchNameFilterProps) {
-  const { artists, setArtists, setHaveSearchByName } = props;
+export default function SearchNameFilter(props: FiltersPropsModel) {
+  const { setFilters } = props;
 
   const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
-    setHaveSearchByName(!!search);
-
-    setArtists(filterArtistsByName(search));
+    setFilters({ searchName: search });
   }, [search]);
-
-  function filterArtistsByName(name: string): ArtistModel[] {
-    const filteredArtists: ArtistModel[] = [...artists].filter(
-      (artist: ArtistModel) =>
-        artist.name.toLowerCase().includes(name.toLowerCase())
-    );
-
-    return filteredArtists;
-  }
 
   return (
     <div className="flex items-center rounded-full bg-slate-800">
