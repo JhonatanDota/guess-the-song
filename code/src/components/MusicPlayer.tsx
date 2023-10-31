@@ -15,7 +15,7 @@ export default function MusicPlayer(props: MusicPlayerProps) {
   const [song] = useState(new Audio(music.previewUrl));
 
   function start() {
-    song.volume = 0.02;
+    song.volume = 0.5;
     song.play();
   }
 
