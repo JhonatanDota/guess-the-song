@@ -15,7 +15,7 @@ import {
 
 type GuessMusicProps = {
   musics: MusicModel[];
-  usedMusics: MusicModel[],
+  usedMusics: MusicModel[];
   setUsedMusics: (musics: MusicModel[]) => void;
   currentPoints: number;
   addPoints: (newPoints: number) => void;
@@ -24,7 +24,15 @@ type GuessMusicProps = {
 };
 
 export default function GuessMusic(props: GuessMusicProps) {
-  const { musics, usedMusics, setUsedMusics, currentPoints, addPoints, onRoundEnd, round } = props;
+  const {
+    musics,
+    usedMusics,
+    setUsedMusics,
+    currentPoints,
+    addPoints,
+    onRoundEnd,
+    round,
+  } = props;
 
   const [endRound, setEndRound] = useState<boolean>(false);
 
@@ -35,7 +43,7 @@ export default function GuessMusic(props: GuessMusicProps) {
   useEffect(() => {
     const newRandomMusics: MusicModel[] = [];
 
-    for (let i: number = 0; i < MAX_RANDOM_MUSICS_LENGTH; i++){
+    for (let i: number = 0; i < MAX_RANDOM_MUSICS_LENGTH; i++) {
       const randomizedMusic: MusicModel = randomizeMusic(musics);
       newRandomMusics.push(randomizedMusic);
     }
