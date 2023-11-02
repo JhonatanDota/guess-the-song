@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import MusicModel from "../models/MusicModel";
+import VolumeControl from "./VolumeControl";
 import MusicProgressBar from "./MusicProgressBar";
+import { getCurrentVolume } from "../commom/functions";
 
 type MusicPlayerProps = {
   music: MusicModel;
@@ -11,11 +13,10 @@ type MusicPlayerProps = {
 export default function MusicPlayer(props: MusicPlayerProps) {
   const { music, maxPlayTime, endRound } = props;
 
-  const [currentTime, setCurrentTime] = useState<number>(0);
   const [song] = useState(new Audio(music.previewUrl));
+  const [currentTime, setCurrentTime] = useState<number>(0);
 
   function start() {
-    song.volume = 0.5;
     song.play();
   }
 
@@ -44,6 +45,14 @@ export default function MusicPlayer(props: MusicPlayerProps) {
   }, []);
 
   const progress: number = (currentTime / maxPlayTime) * 100;
+  const volume: number = getCurrentVolume();
 
-  return <MusicProgressBar progress={progress} />;
+  song.volume = volume;
+
+  return (
+    <div className="flex flex-col">
+      <MusicProgressBar progress={progress} />;
+      <VolumeControl />
+    </div>
+  );
 }
