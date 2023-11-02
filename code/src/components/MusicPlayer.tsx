@@ -39,10 +39,11 @@ export default function MusicPlayer(props: MusicPlayerProps) {
     return () => {
       song.removeEventListener("timeupdate", updateProgress);
       clearInterval(progressUpdateInterval);
+      song.pause();
     };
   }, []);
 
-  const progress = (currentTime / maxPlayTime) * 100;
+  const progress: number = (currentTime / maxPlayTime) * 100;
 
   return <MusicProgressBar progress={progress} />;
 }
