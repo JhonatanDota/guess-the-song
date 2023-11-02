@@ -28,6 +28,7 @@ export default function GuessMusics() {
   const [isCountdownDone, setIsCountdownDone] = useState<boolean>(false);
 
   const [musics, setMusics] = useState<MusicModel[]>([]);
+  const [usedMusics, setUsedMusics ] = useState<MusicModel[]>([]);
 
   useEffect(() => {
     const findedArtist: ArtistModel | undefined = ARTISTS.find(
@@ -72,6 +73,8 @@ export default function GuessMusics() {
         <>
           <Round
             musics={musics}
+            usedMusics={usedMusics}
+            setUsedMusics={setUsedMusics}
             currentPoints={points}
             addPoints={addPoints}
             onRoundEnd={handleStartRound}

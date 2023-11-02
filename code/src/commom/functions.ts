@@ -1,13 +1,13 @@
 import MusicModel from "../models/MusicModel";
 import { LOCAL_STORAGE_ITENS } from "./constants";
 
-export function randomIndex(length: number): number {
+export function randomizeIndex(length: number): number {
   return Math.floor(Math.random() * length);
 }
 
 export function randomizeMusic(musics: MusicModel[]): MusicModel {
   const musicsLength: number = musics.length;
-  const index: number = randomIndex(musicsLength);
+  const index: number = randomizeIndex(musicsLength);
 
   return musics[index];
 }

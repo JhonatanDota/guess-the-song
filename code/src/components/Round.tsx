@@ -8,13 +8,15 @@ import {
 } from "../commom/constants";
 
 import {
-  randomIndex,
+  randomizeIndex,
   randomizeMusic,
   checkCorrectChoice,
 } from "../commom/functions";
 
 type GuessMusicProps = {
   musics: MusicModel[];
+  usedMusics: MusicModel[],
+  setUsedMusics: (musics: MusicModel[]) => void;
   currentPoints: number;
   addPoints: (newPoints: number) => void;
   onRoundEnd: () => void;
@@ -22,7 +24,7 @@ type GuessMusicProps = {
 };
 
 export default function GuessMusic(props: GuessMusicProps) {
-  const { musics, currentPoints, addPoints, onRoundEnd, round } = props;
+  const { musics, usedMusics, setUsedMusics, currentPoints, addPoints, onRoundEnd, round } = props;
 
   const [endRound, setEndRound] = useState<boolean>(false);
 
@@ -33,11 +35,22 @@ export default function GuessMusic(props: GuessMusicProps) {
   useEffect(() => {
     const newRandomMusics: MusicModel[] = [];
 
-    for (let i: number = 0; i < MAX_RANDOM_MUSICS_LENGTH; i++)
-      newRandomMusics.push(randomizeMusic(musics));
+    for (let i: number = 0; i < MAX_RANDOM_MUSICS_LENGTH; i++){
+      const randomizedMusic: MusicModel = randomizeMusic(musics);
+      newRandomMusics.push(randomizedMusic);
+    }
 
-    setCorrectMusic(newRandomMusics[randomIndex(newRandomMusics.length)]);
+    let randomIndex: number = randomizeIndex(newRandomMusics.length);
+    let correctMusic: MusicModel = newRandomMusics[randomIndex];
+
+    while (usedMusics.some((music: MusicModel) => music === correctMusic)) {
+      randomIndex = randomizeIndex(newRandomMusics.length);
+      correctMusic = newRandomMusics[randomIndex];
+    }
+
+    setCorrectMusic(correctMusic);
     setRandomMusics(newRandomMusics);
+    setUsedMusics([correctMusic, ...usedMusics]);
   }, []);
 
   useEffect(() => {
