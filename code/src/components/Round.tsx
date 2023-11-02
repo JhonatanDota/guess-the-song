@@ -44,7 +44,16 @@ export default function GuessMusic(props: GuessMusicProps) {
     const newRandomMusics: MusicModel[] = [];
 
     for (let i: number = 0; i < MAX_RANDOM_MUSICS_LENGTH; i++) {
-      const randomizedMusic: MusicModel = randomizeMusic(musics);
+      let randomizedMusic: MusicModel = randomizeMusic(musics);
+
+      while (
+        newRandomMusics.some((music: MusicModel) =>
+          music.trackName.includes(randomizedMusic.trackName)
+        )
+      ) {
+        randomizedMusic = randomizeMusic(musics);
+      }
+
       newRandomMusics.push(randomizedMusic);
     }
 
